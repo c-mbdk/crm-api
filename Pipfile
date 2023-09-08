@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 flask = "*"
 psycopg2 = "*"
-sqlalchemy = "*"
+pytest = "*"
+requests = "*"
+assertpy = "*"
+faker = "*"
 
 [dev-packages]
+ipykernel = "*"
