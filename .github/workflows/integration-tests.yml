@@ -18,6 +18,7 @@ jobs:
           POSTGRES_PASSWORD: root
           POSTGRES_DB: crm_api_db
         ports: ['5432:5432']
+        
         # setting health checks to wait until the service is running
         options: >-
           --health-cmd pg_isready
