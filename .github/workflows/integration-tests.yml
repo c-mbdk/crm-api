@@ -44,6 +44,5 @@ jobs:
         env: 
           DATABASE_URL: 'postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}crm_api_db'
         run: |
-          pipenv shell
-          python3 app.py
-          pytest tests/crm_test.py
+          pipenv run python3 app.py
+          pipenv run pytest tests/crm_test.py
