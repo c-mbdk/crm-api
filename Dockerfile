@@ -1,7 +1,8 @@
-FROM python:3.9.5-slim-buster
+FROM python:3.9.5-slim AS builder
 
-RUN apt-get update \
-    && pip install psycopg2
+RUN apt-get update && \
+    apt-get -y install libpq-dev gcc && \
+    pip install psycopg2
 RUN pip install --no-cache-dir pipenv
 
 WORKDIR /usr/src/app
