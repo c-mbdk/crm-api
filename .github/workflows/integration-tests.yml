@@ -46,7 +46,7 @@ jobs:
           pipenv run app.py
 
       - name: Run tests
-          env: 
+        env: 
           DATABASE_URL: 'postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}crm_api_db'
-          run: |
+        run: |
           pipenv run pytest tests/crm_test.py
