@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY Pipfile Pipfile.lock bootstrap.sh ./
 COPY tests app.py README.md ./
 
-RUN cd /usr/src/app && pipenv install --system --deploy
+RUN cd /usr/src/app && pipenv install --system
 
 EXPOSE 5000
 ENTRYPOINT ["/usr/src/app/bootstrap.sh"]
