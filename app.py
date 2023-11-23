@@ -10,8 +10,8 @@ CONSTRAINT user_unique UNIQUE (email_address, twitter_handle));
 
 app = Flask(__name__)
 
-connection = psycopg2.connect(database="crm_api_db", user={}, 
-                        password={}, host="localhost", port="5432")
+connection = psycopg2.connect(database="crm_api_db", user="postgres", 
+                        password="root", host="localhost", port="5432")
      
 
 # VIEW ALL CONTACTS

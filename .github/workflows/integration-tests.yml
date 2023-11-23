@@ -1,0 +1,51 @@
+name: Run Unit Tests via Pytest
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    services:
+      postgres:
+        image: postgres:14-alpine
+        user: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: crm_api_db
+        ports:
+        - [5432:5432]
+        # setting health checks to wait until the service is running
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+      - name: Check out the repo code
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install dependencies
+        run: |
+        python3 -m pip install --upgrade pip
+        pipenv install
+
+      - name: Run unit tests
+        env: 
+          DATABASE_URL: 'postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}crm_api_db'
+        run: |
+        python3 app.py
+        pytest tests/crm_test.py
