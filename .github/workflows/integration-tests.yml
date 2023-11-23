@@ -43,7 +43,7 @@ jobs:
 
       - name: Run API
         run: |
-          pipenv run app.py
+          pipenv run python3 app.py
 
       - name: Run tests
         env: 
