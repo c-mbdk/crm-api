@@ -9,7 +9,7 @@ A workflow has been set up which builds the image, based on the Dockerfile, then
 - bootstrap.sh is the executable file which facilitates the start-up of the application
 
 ## Future enhancements
-The unit tests can be refactored into an API test automation framework. This can be triggered when pull requests are made or when commits are pushed to the master branch. If this is successful, then the Docker Image CI workflow can be triggered.
+The integration tests can be refactored into an API test automation framework. This can be triggered when pull requests are made or when commits are pushed to the master branch. If this is successful, then the Docker Image CI workflow can be triggered.
 
 ## How to run:
 
