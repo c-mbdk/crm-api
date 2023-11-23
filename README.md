@@ -1,5 +1,7 @@
 # crm-api
-REST API created using Flask connected to a PostgreSQL DB (running on a local server )
+REST API created using Flask connected to a PostgreSQL DB (running on a local server)
+
+A workflow has been set up which builds the image, based on the Dockerfile, then pushes the image to DockerHub. This Docker Image CI is triggered when a pull request is made or commits are pushed to the master branch. 
 
 ## Project Structure
 - app.py has the implementation for CRUD operations of the CRM API
@@ -7,7 +9,7 @@ REST API created using Flask connected to a PostgreSQL DB (running on a local se
 - bootstrap.sh is the executable file which facilitates the start-up of the application
 
 ## Future enhancements
-The unit tests can be refactored into an API test automation framework.
+The unit tests can be refactored into an API test automation framework. This can be triggered when pull requests are made or when commits are pushed to the master branch. If this is successful, then the Docker Image CI workflow can be triggered.
 
 ## How to run:
 
