@@ -1,6 +1,6 @@
 FROM python:3.9.5-slim-buster
 
-RUN apk update \
+RUN apt-get update \
     && pip install psycopg2
 RUN pip install --no-cache-dir pipenv
 
