@@ -1,6 +1,7 @@
-FROM python:3.10.9-alpine
+FROM python:3.9.5-slim-buster
 
-RUN apk update
+RUN apk update \
+    && pip install psycopg2
 RUN pip install --no-cache-dir pipenv
 
 WORKDIR /usr/src/app
