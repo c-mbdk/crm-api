@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.10"]
-        
+
     services:
       postgres:
         image: postgres:14-alpine
@@ -42,6 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
         python3 -m pip install --upgrade pip
+        pip install pipenv
         pipenv install
 
       - name: Run unit tests
