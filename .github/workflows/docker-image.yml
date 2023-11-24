@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   workflow_run:
-    workflows: Run Unit Tests via Pytest
+    workflows: Run Integration Tests via Pytest
     branches: main
     types: completed
 

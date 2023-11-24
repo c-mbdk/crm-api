@@ -1,7 +1,9 @@
 # crm-api
-REST API created using Flask connected to a PostgreSQL DB (running on a local server)
+REST API created using Flask connected to a PostgreSQL DB (running on a local server but can be run using a Docker container)
 
-A workflow has been set up which builds the image, based on the Dockerfile, then pushes the image to DockerHub. This Docker Image CI is triggered when a pull request is made or commits are pushed to the master branch. 
+A workflow has been set up to run integration tests on the API. The workflow configures a service container using the Postgres image and the same credentials required by the Flask app. After ensuring that the service is running, the environment is set up with the right packages, the app is run in the background and then the tests are executed. If all the tests pass, the Docker Image CI is triggered.
+
+The Docker Image CI workflow builds the image, based on the Dockerfile, then pushes the image to DockerHub. This Docker Image CI is only triggered when the integration tests (Run Integration Tests via Pytest) workflow is successful. The integration tests workflow is only triggered by pull requests or pushes to the main branch.
 
 ## Project Structure
 - app.py has the implementation for CRUD operations of the CRM API
@@ -9,7 +11,9 @@ A workflow has been set up which builds the image, based on the Dockerfile, then
 - bootstrap.sh is the executable file which facilitates the start-up of the application
 
 ## Future enhancements
-The integration tests can be refactored into an API test automation framework. This can be triggered when pull requests are made or when commits are pushed to the master branch. If this is successful, then the Docker Image CI workflow can be triggered.
+The next major step is to deploy the API.
+
+There could also be more tests added to ensure that the API is thoroughly tested.
 
 ## How to run:
 
