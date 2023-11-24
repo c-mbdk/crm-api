@@ -41,9 +41,9 @@ jobs:
           pip install pipenv
           pipenv install
 
-      # - name: Run API
-      #   run: |
-      #     pipenv run python3 app.py
+      - name: Run API
+        run: |
+          pipenv run python3 app.py &
 
       - name: Run tests
         env: 
