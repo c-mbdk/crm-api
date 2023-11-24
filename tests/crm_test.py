@@ -53,9 +53,6 @@ def test_get_all_contacts():
 
     assert_that(response.status_code).is_equal_to(200)
 
-    # only works locally
-    # contact_names = search_contact_in(contacts, 'Jane Doe')
-    # assert_that(contact_names).contains('Jane Doe')
 
 # Test Scenario: Get one contact
 def test_get_one_contact():
