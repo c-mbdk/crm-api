@@ -1,13 +1,17 @@
 # crm-api
 REST API created using Flask connected to a PostgreSQL DB (running on a local server but can be run using a Docker container)
 
-A workflow has been set up to run integration tests on the API. The workflow configures a service container using the Postgres image and the same credentials required by the Flask app. After ensuring that the service is running, the environment is set up with the right packages, the app is run in the background and then the tests are executed. If all the tests pass, the Docker Image CI is triggered.
+Based on the concept of abstraction and clean architecture, the most recent changes to this API explore decoupling core logic, particularly business logic, from the infrastructure. The API no longer has explicit SQL statements, nor talks directly to the database. Instead, all operations are handled via a Contact service which initiates a unit of work to handle transactions and ensure data consistency. The unit of work creates abstraction between the data access layer and the business logic layer. This unit of work then uses the repository, which manages data access in a centralised manner and acts like the data is stored in memory. This simplifies the database operations for the application further, providing yet another layer of abstraction.
 
-The Docker Image CI workflow builds the image, based on the Dockerfile, then pushes the image to DockerHub. This Docker Image CI is only triggered when the integration tests (Run Integration Tests via Pytest) workflow is successful. The integration tests workflow is only triggered by pull requests or pushes to the main branch.
+A workflow has been set up to run a full suite of tests (unit, integration, end-to-end) on the API. The workflow ensures the environment is set up with the right packages and the tests are executed. If all the tests pass, the Docker Image CI is triggered.
+
+The Docker Image CI workflow builds the image, based on the Dockerfile, then pushes the image to DockerHub. This Docker Image CI is only triggered when the test suite (Run Test Suite for CRM API) workflow is successful. The test suite workflow is only triggered by pull requests or pushes to the main branch.
 
 ## Project Structure
-- app.py has the implementation for CRUD operations of the CRM API
-- tests/ has the API tests written for the CRM API
+- src/contacts/entrypoints/app/application.py has application factory function for the CRM API
+- src/contacts/entrypoints/routes.py has the endpoints and methods where the CRUD operations can take place, using the service layer
+- src has all of the files relevant for the application, including the domain model, the implementation of the unit of work, repository and service layer
+- tests/ has the API tests written for the CRM API - unit, integration and end-to-end
 - bootstrap.sh is the executable file which facilitates the start-up of the application
 
 ## Future enhancements
@@ -47,7 +51,7 @@ $ cd crm-api
 
 7. Run the application file:
 ```
-$ python3 app.py
+$ FLASK_APP=run.py flask run
 ```
 
 Alternatively, you can also run the application using the bootstrap executable file. Run the executable file like this and it will start up the application
@@ -59,7 +63,7 @@ Steps 3 & 4 can also be completed via the pgAdmin application, if a GUI is prefe
 
 8. To run the tests (from the root directory):
 ```
-$ pytest tests/crm_test.py
+$ FLASK_APP=run.py flask test
 ```
 
 

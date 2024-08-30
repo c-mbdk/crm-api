@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   workflow_run:
-    workflows: Run Integration Tests via Pytest
+    workflows: Run Test Suite for CRM API
     branches: main
     types: completed
 
