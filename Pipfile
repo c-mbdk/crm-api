@@ -5,19 +5,13 @@ name = "pypi"
 
 [packages]
 flask = "*"
-psycopg2 = "*"
 pytest = "*"
 requests = "*"
-assertpy = "*"
-faker = "*"
 sqlalchemy = "*"
 pytest-mock = "*"
-flask-migrate = "*"
-pytest-env = "*"
 python-dotenv = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
-alembic = "*"
 
 [dev-packages]
 ipykernel = "*"
