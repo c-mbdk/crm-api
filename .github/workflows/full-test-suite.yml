@@ -32,4 +32,5 @@ jobs:
             CONFIG_TYPE: config.TestingConfig
             ISOLATION_LEVEL: SERIALIZABLE
         run: |
+          pipenv shell
           flask test
