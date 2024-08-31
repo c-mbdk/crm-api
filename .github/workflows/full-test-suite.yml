@@ -27,4 +27,5 @@ jobs:
             ISOLATION_LEVEL: SERIALIZABLE
         run: |
           pipenv install
+          pipenv shell
           python3 -m pytest
