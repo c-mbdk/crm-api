@@ -8,7 +8,7 @@ from sqlalchemy.orm import declarative_base
 from src.contacts.utils.custom_types import Name, CustomDate, EmailValidator, EmailAddress
 from src.contacts.utils.serializers import serialise_datetime
 
-from db import db
+# from db import db
 
 Base = declarative_base()
 # metadata = Base.metadata
