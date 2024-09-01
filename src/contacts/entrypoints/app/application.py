@@ -10,7 +10,7 @@ import config
 from src.contacts.entrypoints.routes import init_views
 # from db import db
 from src.contacts.domain.model import Contact, Base
-from src.contacts.domain.schema import marshmallow
+from src.contacts.domain.schema import ma
 
 # migrate = Migrate()
 
@@ -31,7 +31,7 @@ def create_app():
 
     # mapper_registry.metadata.create_all(engine)
     # start_mappers()
-    marshmallow.init_app(app)
+    ma.init_app(app)
     # db.init_app(app)
     # migrate.init_app(app,db)
 
