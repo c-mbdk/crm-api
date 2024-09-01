@@ -17,7 +17,7 @@ from src.contacts.adapters.orm import mapper_registry, start_mappers
 from src.contacts.entrypoints.app.application import create_app
 from src.contacts.domain import model
 from src.contacts.service_layer.services import ContactService
-import db
+# import db
 
 from src.contacts.service_layer.unit_of_work import MockUnitOfWork
 
