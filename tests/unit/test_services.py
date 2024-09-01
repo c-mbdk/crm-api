@@ -1,25 +1,5 @@
 import pytest
-from datetime import date
 from types import SimpleNamespace
-
-# class FakeContactRepository(repository.AbstractRepository):
-#     def __init__(self, contacts):
-#         self._contacts = set(contacts)
-
-#     def add(self, contact):
-#         self.contacts.add(contact)
-
-#     def get_by_id(self, id):
-#         return next((c for c in self.contacts if c.id == id), None)
-    
-#     def get_by_email_address(self, email_address):
-#         return next((c for c in self.contacts if c.email_address == email_address), None)
-    
-# class MockSession:
-#     committed = False
-
-#     def commit(self):
-#         self.committed = True
 
 def test_add_and_retrieve_contact_success(mock_uow, contact_service):
     """Tests successful creation of a contact record with ContactService"""
@@ -167,63 +147,3 @@ def test_update_contact_success(mock_uow, contact_service):
     assert contact_retrieved.first_name == 'Jamelia'
     assert contact_retrieved.birthday == '1999-07-20'
     assert mock_uow.committed == True
-
-
-
-# ------------------------------------
-
-# def test_add_and_retrieve_contact_success(new_session_empty_db):
-#     """Tests the add method of the ContactService class - SUCCESS"""
-
-#     # arrange
-#     contact_service = ContactService(new_session_empty_db)
-    
-#     # act
-#     first_contact = model.Contact(first_name='Janice', last_name='Doe', birthday=date(1997, 5, 21), email_address='janice.doe@gmails.com')
-#     contact_service.add(first_contact)
-
-#     # assert
-#     assert contact_service.get_by_id(1) == first_contact
-
-# def test_add_contact_fail(new_session_empty_db):
-#     """Tests the add method of the Contact Service class - FAIL, """
-
-# def test_get_by_id(mock_session, mock_contact_repository):
-#     """Tests the get_by_id method of the ContactService class."""
-
-#     # given
-#     contact_service = ContactService(mock_contact_repository, mock_session)
-#     mock_session.query.return_value.filter_by.return_value.first.return_value = [{'id': 1, 'first_name': 'Janice', 'last_name': 'Doe', 'birthday': '1997-05-21','email_address': 'janice.doe@gmails.com'}]
-
-#     # when
-#     result = contact_service.get_by_id(1)
-
-#     # then
-#     mock_session.query.assert_called_with(model.Contact)
-#     assert result == [{'id': 1, 'first_name': 'Janice', 'last_name': 'Doe', 'birthday': '1997-05-21','email_address': 'janice.doe@gmails.com'}]
-
-# def test_get_by_email_address(mock_session, mock_contact_repository):
-#     """Tests the get_by_email_address method of the ContactService class."""
-
-#     # given
-#     contact_service = ContactService(mock_contact_repository, mock_session)
-#     mock_session.query.return_value.filter_by.return_value = [{'id': 1, 'first_name': 'Janice', 'last_name': 'Doe', 'birthday': '1997-05-21','email_address': 'janice.doe@gmails.com'}]
-
-#     # when
-#     result = contact_service.get_by_email_address('janice.doe@gmails.com')
-
-#     # then
-#     mock_session.query.assert_called_with(model.Contact)
-#     assert result == [{'id': 1, 'first_name': 'Janice', 'last_name': 'Doe', 'birthday': '1997-05-21','email_address': 'janice.doe@gmails.com'}]
-
-# def test_add_contact_success(mock_session, mock_contact_repository):
-#     """Tests the add method of the ContactService class"""
-
-#     # given
-#     contact_service = ContactService(mock_contact_repository, mock_session)
-
-
-#     # when
-
-
-#     # then
