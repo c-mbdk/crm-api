@@ -1,0 +1,24 @@
+name: Merge to main
+
+on:
+  workflow_run:
+    workflows: Run Test Suite for CRM API
+    branches: development
+    types: completed
+
+jobs:
+  merge-branch:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Merge development branch to main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Merge branch
+        uses: everlytic/branch-merge@1.1.5
+        with:
+          github-token: ${{ github.token }}
+          source-ref: 'development'
+          target-branch: 'main'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
