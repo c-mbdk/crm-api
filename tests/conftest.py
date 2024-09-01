@@ -30,7 +30,7 @@ from src.contacts.service_layer.unit_of_work import MockUnitOfWork
 
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
-    env_file = find_dotenv('.env.tests')
+    env_file = find_dotenv('tests/.env.tests')
     load_dotenv(env_file)
 
 
