@@ -22,9 +22,9 @@ jobs:
       - name: Run tests
         env:
             FLASK_APP: run.py
-            ENV_TYPE: Testing
+            ENV_TYPE: 'Testing'
             CONFIG_TYPE: config.TestingConfig
-            ISOLATION_LEVEL: SERIALIZABLE
+            ISOLATION_LEVEL: 'SERIALIZABLE'
         run: |
           pipenv install
           pipenv run python3 -m pytest

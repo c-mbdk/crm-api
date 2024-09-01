@@ -37,8 +37,6 @@ except ImportError:
 def load_env():
     env_file = find_dotenv('tests/.env.tests')
     load_dotenv(env_file)
-    os.environ.update(TEMP_ENV_VARS)
-
 
 @pytest.fixture
 def mock_uow():

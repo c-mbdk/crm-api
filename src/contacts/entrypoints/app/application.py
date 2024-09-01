@@ -14,7 +14,7 @@ from src.contacts.domain.schema import ma
 
 # migrate = Migrate()
 
-load_dotenv()
+# load_dotenv()
 
 def create_app():
 
