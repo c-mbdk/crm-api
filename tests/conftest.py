@@ -25,7 +25,7 @@ from src.contacts.service_layer.unit_of_work import MockUnitOfWork
 
 
 os.environ["ENV_TYPE"] = "Testing"
-os.environ["CONFIG_TYPE"] = config.TestingConfig
+os.environ["CONFIG_TYPE"] = "config.TestingConfig"
 os.environ["ISOLATION_LEVEL"] = "SERIALIZABLE"
 
 @pytest.fixture(scope='session', autouse=True)
