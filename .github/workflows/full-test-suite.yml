@@ -25,4 +25,4 @@ jobs:
             PIPENV_DONT_LOAD_ENV: 1
         run: 
           pipenv install
-          pipenv run python3 -m pytest
+          flask test
