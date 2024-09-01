@@ -12,6 +12,8 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers, Session
 
+from dotenv import load_dotenv, find_dotenv
+
 import config
 from src.contacts.adapters.orm import mapper_registry, start_mappers
 from src.contacts.entrypoints.app.application import create_app
@@ -23,8 +25,13 @@ from src.contacts.service_layer.unit_of_work import MockUnitOfWork
 
 
 os.environ["ENV_TYPE"] = "Testing"
-os.environ["CONFIG_TYPE"] = "config.TestingConfig"
+os.environ["CONFIG_TYPE"] = config.TestingConfig
 os.environ["ISOLATION_LEVEL"] = "SERIALIZABLE"
+
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
+    env_file = find_dotenv('.env.tests')
+    load_dotenv(env_file)
 
 
 @pytest.fixture
@@ -124,9 +131,9 @@ def postgres_test_db_cleardown(postgres_db):
 @pytest.fixture(scope='module')
 def get_flask_app():
     # os.environ['CONFIG_TYPE'] = "config.TestingConfig"
-    os.environ["ENV_TYPE"] = "Testing"
-    os.environ["CONFIG_TYPE"] = "config.TestingConfig"
-    os.environ["ISOLATION_LEVEL"] = "SERIALIZABLE"
+    # os.environ["ENV_TYPE"] = "Testing"
+    # os.environ["CONFIG_TYPE"] = "config.TestingConfig"
+    # os.environ["ISOLATION_LEVEL"] = "SERIALIZABLE"
     test_flask_app = create_app()
 
     with test_flask_app.test_client() as testing_client:

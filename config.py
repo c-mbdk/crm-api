@@ -1,6 +1,9 @@
 import os
 from click import echo
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Determine the folder of the top-level directory of this project
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
@@ -9,6 +12,7 @@ class Config(object):
     FLASK_ENV = 'development'
     DEBUG = False
     TESTING = False
+
     if os.getenv('DATABASE_URI'):
         host = os.environ.get('DB_HOST', 'localhost')
         port = 5432 if host == 'localhost' else 54321
@@ -17,7 +21,9 @@ class Config(object):
         SQLALCHEMY_DATABASE_URI = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
     else:
         SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(BASEDIR, 'instance', 'app.db')}"
+        
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    ISOLATION_LEVEL = os.getenv('ISOLATION_LEVEL', default='REPEATABLE READ')
 
 class ProductionConfig(Config):
     FLASK_ENV = 'production'
