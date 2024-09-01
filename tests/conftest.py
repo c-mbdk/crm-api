@@ -35,7 +35,7 @@ except ImportError:
 
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
-    env_file = find_dotenv(os.path.join(config.BASEDIR, '.env.tests'))
+    env_file = find_dotenv(os.path.join(config.BASEDIR, '.test.env'))
     load_dotenv(env_file)
     print(os.getenv('ENV_TYPE'))
     print(os.getenv('CONFIG_TYPE'))
