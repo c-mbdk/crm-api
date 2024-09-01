@@ -22,7 +22,9 @@ jobs:
       - name: Run tests
         env:
             FLASK_APP: run.py
-            PIPENV_DONT_LOAD_ENV: 1
+            ENV_TYPE: 'Testing'
+            CONFIG_TYPE: config.TestingConfig
+            ISOLATION_LEVEL: 'SERIALIZABLE'
         run: 
           pipenv install
-          flask test
+          pipenv run python3 -m pytest
