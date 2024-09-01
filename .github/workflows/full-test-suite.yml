@@ -19,6 +19,10 @@ jobs:
         with:
           python-version: 3.10.9
 
+      - name: Run CRM API
+        run: |
+          python3 run.py &
+
       - name: Run tests
         run: 
-          pipenv run python3 pytest
+          flask test
