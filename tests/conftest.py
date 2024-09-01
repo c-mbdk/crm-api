@@ -124,6 +124,9 @@ def postgres_test_db_cleardown(postgres_db):
 @pytest.fixture(scope='module')
 def get_flask_app():
     # os.environ['CONFIG_TYPE'] = "config.TestingConfig"
+    os.environ["ENV_TYPE"] = "Testing"
+    os.environ["CONFIG_TYPE"] = "config.TestingConfig"
+    os.environ["ISOLATION_LEVEL"] = "SERIALIZABLE"
     test_flask_app = create_app()
 
     with test_flask_app.test_client() as testing_client:
