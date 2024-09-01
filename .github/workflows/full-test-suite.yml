@@ -19,12 +19,8 @@ jobs:
         with:
           python-version: 3.10.9
 
-      - name: Run CRM API
-        run: |
-          python3 run.py &
-
       - name: Run tests
         env:
           FLASK_APP: run.py
         run: 
-          flask test
+          python3 -m pytest
