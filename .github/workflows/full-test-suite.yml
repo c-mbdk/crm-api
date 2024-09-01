@@ -24,5 +24,7 @@ jobs:
           python3 run.py &
 
       - name: Run tests
+        env:
+          FLASK_APP: run.py
         run: 
           flask test
