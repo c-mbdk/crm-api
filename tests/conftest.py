@@ -35,8 +35,10 @@ except ImportError:
 
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
-    env_file = find_dotenv('tests/.env.tests')
+    env_file = find_dotenv(os.path.join(config.BASEDIR, '.env.tests'))
     load_dotenv(env_file)
+    print(os.getenv('ENV_TYPE'))
+    print(os.getenv('CONFIG_TYPE'))
 
 @pytest.fixture
 def mock_uow():
