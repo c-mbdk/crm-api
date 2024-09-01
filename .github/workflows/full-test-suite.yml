@@ -20,12 +20,6 @@ jobs:
           python-version: 3.12
 
       - name: Run tests
-        env:
-            PIPENV_DOTENV_LOCATION: ./test.env
-            FLASK_APP: run.py
-            ENV_TYPE: 'Testing'
-            CONFIG_TYPE: config.TestingConfig
-            ISOLATION_LEVEL: 'SERIALIZABLE'
         run: 
           pipenv install
           pipenv run python3 pytest
