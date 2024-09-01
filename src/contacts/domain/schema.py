@@ -12,9 +12,7 @@ class ContactSchema(ma.Schema):
         load_instance = True
         fields = ("id", "first_name", "last_name", "birthday", "email_address", "created_at")
 
-    id = ma.auto_field()
-    first_name = ma.auto_field(required=True)
-    last_name = ma.auto_field(required=True)
-    birthday = ma.auto_field(required=True, format="%Y-%m-%d")
-    email_address = fields.String(validate=[validate.Email(error='Email address must be valid'), validate.Length(min=3, max=255, error='Email address must be provided.')], required=True)
-    created_at = ma.auto_field()
+    first_name = ma.String(required=True)
+    last_name = ma.String(required=True)
+    birthday = ma.Date(required=True, format="%Y-%m-%d")
+    email_address = ma.String(validate=[validate.Email(error='Email address must be valid'), validate.Length(min=3, max=255, error='Email address must be provided.')], required=True)
