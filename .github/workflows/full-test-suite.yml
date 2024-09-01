@@ -21,7 +21,7 @@ jobs:
 
       - name: Run tests
         env:
-            PIPENV_DOTENV_LOCATION: tests/.env.
+            PIPENV_DOTENV_LOCATION: .test.env
             FLASK_APP: run.py
             ENV_TYPE: 'Testing'
             CONFIG_TYPE: config.TestingConfig
