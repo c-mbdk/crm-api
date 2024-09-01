@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import datetime
-from types import SimpleNamespace
 from sqlalchemy.orm import Session
 
 from src.contacts.domain import model
@@ -49,11 +48,7 @@ class SqlAlchemyContactRepository(AbstractContactRepository):
         return self.session.query(model.Contact).filter_by(id=id).first()
     
     def get_by_email_address(self, email_address):
-        # contacts = self.session.query(model.Contact).filter(model.Contact.email_address == email_address)
-        # print(contacts)
-        # selected_contacts = contacts.filter_by(email_address=str(email_address)).first()
         return self.session.query(model.Contact).filter_by(email_address=email_address).first()
-        # return contacts
     
     def update(self, id, new_properties_dict):
         current_record = self.get_by_id(id)

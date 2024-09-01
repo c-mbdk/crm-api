@@ -1,5 +1,3 @@
-import os
-
 import pytest
 
 from sqlalchemy import create_engine
@@ -76,9 +74,3 @@ def get_flask_app():
     with test_flask_app.test_client() as testing_client:
         with test_flask_app.app_context():
             yield testing_client
-
-
-@pytest.fixture(scope='module')
-def test_flask_client(get_flask_app):
-    return get_flask_app.test_client()
-
