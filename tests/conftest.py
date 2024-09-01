@@ -23,6 +23,11 @@ from src.contacts.service_layer.services import ContactService
 
 from src.contacts.service_layer.unit_of_work import MockUnitOfWork
 
+try:
+    from.temp_env_var import TEMP_ENV_VARS
+except ImportError:
+    TEMP_ENV_VARS = {}
+
 
 # os.environ["ENV_TYPE"] = "Testing"
 # os.environ["CONFIG_TYPE"] = "config.TestingConfig"
@@ -32,6 +37,7 @@ from src.contacts.service_layer.unit_of_work import MockUnitOfWork
 def load_env():
     env_file = find_dotenv('tests/.env.tests')
     load_dotenv(env_file)
+    os.environ.update(TEMP_ENV_VARS)
 
 
 @pytest.fixture
