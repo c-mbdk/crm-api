@@ -24,18 +24,13 @@ class ContactService:
                 self.uow.contacts.add(model.Contact(first_name=first_name, last_name=last_name, birthday=birthday, email_address=email_address))
                 self.uow.commit()
                 retrieved_contact = self.uow.contacts.get_by_email_address(email_address)
-                print(f'Raw data from db: {retrieved_contact}')
-                print(type(retrieved_contact))
                 ready_for_api = serialize_for_api(retrieved_contact, 'single')
-                print(f'Data sent to client: {ready_for_api}')
-                print(type(ready_for_api))
                 return serialize_for_api(retrieved_contact, 'single')
             
     
     def get_all_contacts(self):
         with self.uow:
             all_contacts = self.uow.contacts.get_all()
-            print(f'Retrieved from repo: {all_contacts}')
             return serialize_for_api(all_contacts, 'not single')
     
     def get_by_id(self, id):
@@ -83,7 +78,6 @@ class ContactService:
                         return self.get_by_id(id)
 
                     
-
 
 # Additional functions for validation - using marshmellow schema
 
