@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: 3.10.9
 
-      - name: Run tests
+      - name: Run tests with pipenv
         env:
           FLASK_APP: run.py
         run: 
