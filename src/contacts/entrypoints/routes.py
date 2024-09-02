@@ -1,35 +1,9 @@
-from datetime import datetime
 import json
-import os
-from types import SimpleNamespace
-from flask import Response, request, jsonify
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from flask import Response, request
 
-import config
-from src.contacts.adapters import orm
 from src.contacts.service_layer.services import ContactService, validate_request_with_schema, transform_request_for_db
 from src.contacts.service_layer import unit_of_work
 
-# orm.start_mappers()
-# app = Flask(__name__)
-
-# def update_config_type(env_type):
-#     if env_type == 'Production':
-#         config_db_uri = config.ProductionConfig.SQLALCHEMY_DATABASE_URI
-#         isolation_level = 'REPEATABLE READ'
-#     elif env_type == 'Testing':
-#         config_db_uri = config.TestingConfig.SQLALCHEMY_DATABASE_URI
-#         isolation_level = 'SERIALIZABLE'
-#     else:
-#         config_db_uri = config.ProductionConfig.SQLALCHEMY_DATABASE_URI
-#         isolation_level = 'REPEATABLE READ'
-
-#     return config_db_uri, isolation_level
-
-# env_type = os.environ.get('ENV_TYPE')
-
-# config_db_uri, isolation_level = update_config_type(env_type)
 
 def init_views(app):
     @app.route('/contacts', methods=['POST'])
@@ -58,8 +32,6 @@ def init_views(app):
     @app.route('/contacts/<int:id>', methods=['GET'])
     def get_contact(id):
         service = ContactService(unit_of_work.SqlAlchemyUnitOfWork(session_factory=unit_of_work.DEFAULT_SESSION_FACTORY))
-
-        # service = ContactService(unit_of_work.SqlAlchemyUnitOfWork(session_factory=unit_of_work.DEFAULT_SESSION_FACTORY))
 
         existing_contact = service.get_by_id(id)
 
