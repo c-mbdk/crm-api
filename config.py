@@ -21,7 +21,7 @@ class Config(object):
         SQLALCHEMY_DATABASE_URI = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
     else:
         SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(BASEDIR, 'instance', 'app.db')}"
-        
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ISOLATION_LEVEL = os.getenv('ISOLATION_LEVEL', default='REPEATABLE READ')
 
@@ -35,19 +35,6 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URI', default=f"sqlite:///{os.path.join(BASEDIR, 'tests', 'test.db')}")
     ISOLATION_LEVEL = 'SERIALIZABLE'
-
-####
-#     host = os.environ.get('DB_HOST', 'localhost')
-#     port = 5432 if host == 'localhost' else 54321
-#     password = os.environ.get('DB_PASSWORD', 'root')
-#     user, db_name = 'postgres', 'crm_api_db'
-#     return f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
-
-def get_api_url():
-    # host = os.environ.get('API_HOST', '127.0.0.1')
-    # port = 5000
-    # return f"http://{host}:{port}"
-    return 'http://localhost:5000/'
 
 
 def register_cli_commands(app):
