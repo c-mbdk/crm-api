@@ -3,7 +3,7 @@ name: Docker Image CI (dev)
 on:
   workflow_run:
     workflows: Run Test Suite for CRM API
-    branches: development
+    branches: [ "development" ]
     types: completed
 
 jobs:
