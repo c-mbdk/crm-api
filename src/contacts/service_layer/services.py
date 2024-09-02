@@ -5,29 +5,12 @@ from marshmallow import ValidationError
 
 from src.contacts.domain import model
 from src.contacts.domain import schema
-# from src.contacts.adapters.repository import SqlAlchemyContactRepository
 from src.contacts.service_layer.unit_of_work import SqlAlchemyUnitOfWork
 from src.contacts.utils.exceptions import RecordExists, InvalidRecord
 import config as config
 
-# Configuration
-# def update_config_type(env_type):
-#     if env_type == 'Production':
-#         config_db_uri = config.ProductionConfig.SQLALCHEMY_DATABASE_URI
-#     elif env_type == 'Testing':
-#         config_db_uri == config.TestingConfig.SQLALCHEMY_DATABASE_URI
-#     else:
-#         config.db.uri = config.ProductionConfig
-
-#     return config_db_uri
-
-# env_type = 'Production'
-
-# config_db_uri = update_config_type(env_type)
 
 class ContactService:
-    # def __init__(self, session):
-    #     self.repository = SqlAlchemyContactRepository(session)
 
     def __init__(self, uow: SqlAlchemyUnitOfWork):
         self.uow = uow
@@ -48,14 +31,6 @@ class ContactService:
                 print(type(ready_for_api))
                 return serialize_for_api(retrieved_contact, 'single')
             
-    # def add(self, contact):
-    #     with self.uow:
-    #         contact_exists = self.uow.contacts.get_by_email_address(contact.email_address)
-    #         if contact_exists is not None:
-    #             raise RecordExists(contact.email_address)
-    #         else:
-    #             self.uow.contacts.add(contact)
-    #             self.uow.commit()
     
     def get_all_contacts(self):
         with self.uow:
@@ -71,7 +46,6 @@ class ContactService:
             else:
                 selected_contact = self.uow.contacts.get_by_id(id)
                 return serialize_for_api(selected_contact, 'single')
-            return model.Contact.dict(self.uow.contacts.get_by_id(id))
     
     def get_by_email_address(self, email_address):
         with self.uow:
@@ -107,7 +81,6 @@ class ContactService:
                         self.uow.contacts.update(id, new_properties_dict)
                         self.uow.commit()
                         return self.get_by_id(id)
-                        # return serialize_for_api(selected_contact, 'single')
 
                     
 
