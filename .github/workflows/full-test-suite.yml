@@ -1,0 +1,26 @@
+name: Run Test Suite for CRM API
+
+on:
+  push:
+    branches: [ "development" ]
+  pull_request:
+    branches: [ "development" ]
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out the repo code
+        uses: actions/checkout@v4
+
+      - name: Install Python, pipenv and Pipfile packages
+        uses: palewire/install-python-pipenv-pipfile@v4
+        with:
+          python-version: 3.10.9
+
+      - name: Run tests with pipenv
+        env:
+          FLASK_APP: run.py
+        run: 
+          pipenv run python3 -m pytest
