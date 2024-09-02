@@ -17,7 +17,6 @@ def create_app():
     config.register_cli_commands(app)
 
     config_type_dev = os.environ.get('CONFIG_TYPE')
-    print(config_type_dev)
     app.config.from_object(config_type_dev)
     app.config
 
