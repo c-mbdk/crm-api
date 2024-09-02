@@ -2,7 +2,7 @@ name: Merge to main
 
 on:
   workflow_run:
-    workflows: Run Test Suite for CRM API
+    workflows: Run Test Suite for CRM API (draft status for now)
     branches: development
     types: completed
 
