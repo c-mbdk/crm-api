@@ -19,6 +19,8 @@ The next major step is to deploy the API.
 
 There could also be more tests added to ensure that the API is thoroughly tested.
 
+Global exception handling needs to be implemented to ensure that the right and appropriate details are shared in error responses.
+
 ## How to run:
 
 1. Ensure you have pipenv installed. More information on installing pipenv is available here: https://pipenv.pypa.io/en/latest/installation/
