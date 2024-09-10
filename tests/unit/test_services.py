@@ -45,7 +45,7 @@ def test_add_contact_fail(mock_uow, contact_service):
         contact_service.add(first_name, last_name, birthday, email_address)
     
     # assert
-    assert str(excinfo.value) == 'Contact already exists with this email address: juliet.doe@gmails.com'
+    assert str(excinfo.value) == 'Contact already exists with this email address - juliet.doe@gmails.com'
     assert mock_uow.committed
 
 
@@ -60,7 +60,7 @@ def test_get_invalid_contact(contact_service):
         contact_service.get_by_id(3)
     
     # assert
-    assert str(excinfo.value) == 'No contact found with this id: 3'
+    assert str(excinfo.value) == 'No contact found with this id - 3'
 
 
 def test_get_all_contacts_success(contact_service):
@@ -120,7 +120,7 @@ def test_delete_contact_fail(contact_service):
         contact_service.delete_by_id(46)
     
     # assert
-    assert str(excinfo.value) == 'No contact found with this id: 46'
+    assert str(excinfo.value) == 'No contact found with this id - 46'
 
 
 def test_update_contact_success(mock_uow, contact_service):

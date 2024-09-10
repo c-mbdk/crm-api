@@ -1,0 +1,8 @@
+2024-09-10 19:14:14,033 ERROR MainThread-8699744064: RecordExists - Contact already exists with this email address - jane.doe@gmails.com [in routes.py:116]
+2024-09-10 19:14:14,054 ERROR MainThread-8699744064: InvalidRecord - No contact found with this id - 1 [in routes.py:130]
+2024-09-10 19:14:14,058 ERROR MainThread-8699744064: Validation Error - {'email_address': ['Email address must be valid', 'Email address must be provided.']} [in routes.py:123]
+2024-09-10 19:14:14,058 ERROR MainThread-8699744064: InvalidRecord - No contact found with this id - 1 [in routes.py:130]
+2024-09-10 19:14:14,059 ERROR MainThread-8699744064: InvalidRecord - No contact found with this id - 1 [in routes.py:130]
+2024-09-10 19:14:14,060 ERROR MainThread-8699744064: InvalidRecord - No contact found with this id - 1 [in routes.py:130]
+2024-09-10 19:14:14,061 ERROR MainThread-8699744064: InvalidRecord - No contact found with this id - 1 [in routes.py:130]
+2024-09-10 19:14:14,064 ERROR MainThread-8699744064: BadRequestException - Bad Request - Invalid path [in routes.py:137]

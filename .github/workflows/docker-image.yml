@@ -1,4 +1,4 @@
-name: Docker Image CI (dev)
+name: Docker Image CI
 
 on:
   workflow_run:

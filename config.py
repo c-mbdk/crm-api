@@ -1,7 +1,10 @@
+from logging.handlers import RotatingFileHandler
 import os
 from click import echo
 import pytest
 from dotenv import load_dotenv
+import logging
+from flask.logging import default_handler
 
 load_dotenv()
 
@@ -63,3 +66,17 @@ def register_cli_commands(app):
         """Runs all end-to-end tests."""
         pytest.main(["-s", 'tests/e2e/'])
         echo('All end-to-end tests have been run.')
+
+
+def configure_logging(app):
+    file_handler = RotatingFileHandler('instance/crm.log', maxBytes=16384, backupCount=20)
+    file_formatter = logging.Formatter('%(asctime)s %(levelname)s %(threadName)s-%(thread)d: %(message)s [in %(filename)s:%(lineno)d]')
+
+    file_handler.setFormatter(file_formatter)
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+
+    # Remove the default logger configured by Flask
+    app.logger.removeHandler(default_handler)
+
+    app.logger.info('Starting the CRM API...')
