@@ -24,8 +24,8 @@ class ContactService:
                 self.uow.contacts.add(model.Contact(first_name=first_name, last_name=last_name, birthday=birthday, email_address=email_address))
                 self.uow.commit()
                 retrieved_contact = self.uow.contacts.get_by_email_address(email_address)
-                ready_for_api = serialize_for_api(retrieved_contact, 'single')
                 return serialize_for_api(retrieved_contact, 'single')
+            
     
     def get_all_contacts(self):
         with self.uow:
@@ -60,7 +60,6 @@ class ContactService:
             contact_exists = self.uow.contacts.get_by_id(id)
             if contact_exists is None:
                 raise InvalidRecord(id)
-                return {'message': 'No contact found with id so update failed.'}
             else:
                 with self.uow:
                     if 'birthday' in new_properties_dict.keys():
@@ -78,20 +77,20 @@ class ContactService:
 
                     
 
-
-# Additional functions for validation - using marshmellow schema
+# Additional functions for validation - using marshmallow schema
 
 def validate_request_with_schema(request_dict):
 
-    error = None
     validation_schema = schema.ContactSchema()
+    error_messages = None
 
     try:
         validation_schema.load(request_dict)
     except ValidationError as e:
-        error = e
+        error_messages = e.messages
+        raise ValidationError(e.messages)
 
-    return error
+    return error_messages
 
 
 def transform_request_for_db(request_dict):

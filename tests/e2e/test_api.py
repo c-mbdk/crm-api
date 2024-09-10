@@ -1,12 +1,13 @@
 import pytest
 import json
 
+from src.contacts.utils.exceptions import BaseCustomException, RecordExists
 
 def test_unhappy_path_create_contact_email_in_use(postgres_test_db_cleardown, get_flask_app):
     """Tests unhappy path of creating a new contact - contact already exists"""
 
     # arrange
-    get_flask_app.post(
+    response_post = get_flask_app.post(
         '/contacts',
         json={'first_name': 'Jane',
               'last_name': 'Doe',
@@ -15,8 +16,7 @@ def test_unhappy_path_create_contact_email_in_use(postgres_test_db_cleardown, ge
     )
 
     # act
-    with pytest.raises(Exception) as excinfo:
-        response = get_flask_app.post(
+    response = get_flask_app.post(
             '/contacts',
             json={'first_name': 'Janice',
                 'last_name': 'Doe',
@@ -25,7 +25,9 @@ def test_unhappy_path_create_contact_email_in_use(postgres_test_db_cleardown, ge
         )
 
     # assert
-    assert str(excinfo.value) == 'Contact already exists with this email address: jane.doe@gmails.com'
+    response_decoded = response.data.decode('utf-8')
+    
+    assert "Contact already exists with this email address - jane.doe@gmails.com" in response_decoded
 
 
 def test_happy_path_retrieve_multiple_contacts(postgres_test_db_cleardown, get_flask_app):
@@ -136,11 +138,11 @@ def test_happy_path_contact_creation_update_flow(postgres_test_db_cleardown, get
 
 
     # separate request to confirm contact fully deleted - GET individual contact
-    with pytest.raises(Exception) as excinfo:
-        get_single_contact_response = get_flask_app.get('/contacts/1')
+    get_single_contact_response = get_flask_app.get('/contacts/1')
+    get_single_contact_resp_decoded = get_single_contact_response.data.decode('utf-8')
 
     # assertions for contact retrieval following delete
-    assert str(excinfo.value) == 'No contact found with this id: 1'
+    assert 'No contact found with this id - 1' in get_single_contact_resp_decoded
 
 
 def test_unhappy_path_contact_creation_update_flow(postgres_test_db_cleardown, get_flask_app):
@@ -156,46 +158,57 @@ def test_unhappy_path_contact_creation_update_flow(postgres_test_db_cleardown, g
     )
 
     resp_decoded = response.data.decode('utf-8')
-    print(f'Payload validation response: {resp_decoded}')
-    # resp_decoded = json.loads(resp_decoded)
 
     # assertions for contact creation
     assert response.status_code == 422
+    assert "Email address must be provided" in resp_decoded
 
 
     # separate request to retrieve contact to check record was not committed - GET
-    with pytest.raises(Exception) as excinfo:
-        get_response = get_flask_app.get('/contacts/1')
-        assert get_response.status_code == 404
+    get_response = get_flask_app.get('/contacts/1')
+    get_response_decoded = get_response.data.decode('utf-8')
 
     # assertions for contact retrieval
-    assert str(excinfo.value) == 'No contact found with this id: 1'
+    assert get_response.status_code == 404
+    assert 'No contact found with this id - 1' in get_response_decoded
 
     # separate request to update contact that was not committed - PUT
-    with pytest.raises(Exception) as excinfo:
-        update_response = get_flask_app.put('/contacts/1', 
-                                        json={
-                                            'first_name': 'Julianne',
-                                            'email_address': 'julianne.doe@gmails.com'})
-        assert update_response.status_code == 404
-
+    update_response = get_flask_app.put('/contacts/1', json={
+        'first_name': 'Julianne','email_address': 'julianne.doe@gmails.com'})
+    update_response_decoded = update_response.data.decode('utf-8')
 
     # assertions for contact update
-    assert str(excinfo.value) == 'No contact found with this id: 1'
+    assert update_response.status_code == 404
+    assert 'No contact found with this id - 1' in update_response_decoded
 
     # separate request for retrieval - check update did not persist to create a new record
-    with pytest.raises(Exception) as excinfo:
-        new_get_response = get_flask_app.get('/contacts/1')
-        assert new_get_response.status_code == 404
+    new_get_response = get_flask_app.get('/contacts/1')
+    new_get_response_decoded = new_get_response.data.decode('utf-8')
 
     # assertions for contact retrieval following attempted update
-    assert str(excinfo.value) == 'No contact found with this id: 1'
+    assert new_get_response.status_code == 404
+    assert 'No contact found with this id - 1' in new_get_response_decoded
 
     # separate request for attempted contact deletion - DELETE
-    with pytest.raises(Exception) as excinfo:
-        delete_response = get_flask_app.delete('/contacts/1')
-        assert delete_response.status_code == 404
-
+    delete_response = get_flask_app.delete('/contacts/1')
+    delete_response_decoded = delete_response.data.decode('utf-8')
+        
     # assertions for attempted contact deletion
-    assert str(excinfo.value) == 'No contact found with this id: 1'
+    assert delete_response.status_code == 404
+    assert 'No contact found with this id - 1' in delete_response_decoded
+
+
+def test_invalid_path_returns_bad_request(postgres_test_db_cleardown, get_flask_app):
+    """Tests invalid path returns Bad Request"""
+
+    # act
+    # fixtures
+
+    # arrange
+    get_response = get_flask_app.get('/personal_contacts')
+    get_response_decoded = get_response.data.decode('utf-8')
+
+    # assert
+    assert get_response.status_code == 400
+    assert 'Invalid path' in get_response_decoded
     

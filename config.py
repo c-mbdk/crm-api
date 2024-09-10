@@ -1,7 +1,10 @@
+from logging.handlers import RotatingFileHandler
 import os
 from click import echo
 import pytest
 from dotenv import load_dotenv
+import logging
+from flask.logging import default_handler
 
 load_dotenv()
 
@@ -21,7 +24,7 @@ class Config(object):
         SQLALCHEMY_DATABASE_URI = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
     else:
         SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(BASEDIR, 'instance', 'app.db')}"
-        
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ISOLATION_LEVEL = os.getenv('ISOLATION_LEVEL', default='REPEATABLE READ')
 
@@ -35,19 +38,6 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URI', default=f"sqlite:///{os.path.join(BASEDIR, 'tests', 'test.db')}")
     ISOLATION_LEVEL = 'SERIALIZABLE'
-
-####
-#     host = os.environ.get('DB_HOST', 'localhost')
-#     port = 5432 if host == 'localhost' else 54321
-#     password = os.environ.get('DB_PASSWORD', 'root')
-#     user, db_name = 'postgres', 'crm_api_db'
-#     return f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
-
-def get_api_url():
-    # host = os.environ.get('API_HOST', '127.0.0.1')
-    # port = 5000
-    # return f"http://{host}:{port}"
-    return 'http://localhost:5000/'
 
 
 def register_cli_commands(app):
@@ -76,3 +66,17 @@ def register_cli_commands(app):
         """Runs all end-to-end tests."""
         pytest.main(["-s", 'tests/e2e/'])
         echo('All end-to-end tests have been run.')
+
+
+def configure_logging(app):
+    file_handler = RotatingFileHandler('instance/crm.log', maxBytes=16384, backupCount=20)
+    file_formatter = logging.Formatter('%(asctime)s %(levelname)s %(threadName)s-%(thread)d: %(message)s [in %(filename)s:%(lineno)d]')
+
+    file_handler.setFormatter(file_formatter)
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+
+    # Remove the default logger configured by Flask
+    app.logger.removeHandler(default_handler)
+
+    app.logger.info('Starting the CRM API...')
