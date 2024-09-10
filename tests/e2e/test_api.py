@@ -16,7 +16,6 @@ def test_unhappy_path_create_contact_email_in_use(postgres_test_db_cleardown, ge
     )
 
     # act
-    # with pytest.raises(Exception) as excinfo:
     response = get_flask_app.post(
             '/contacts',
             json={'first_name': 'Janice',
@@ -26,9 +25,7 @@ def test_unhappy_path_create_contact_email_in_use(postgres_test_db_cleardown, ge
         )
 
     # assert
-    print(response)
     response_decoded = response.data.decode('utf-8')
-    print(response_decoded)
     
     assert "Contact already exists with this email address - jane.doe@gmails.com" in response_decoded
 

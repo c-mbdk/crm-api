@@ -60,7 +60,6 @@ class ContactService:
             contact_exists = self.uow.contacts.get_by_id(id)
             if contact_exists is None:
                 raise InvalidRecord(id)
-                return {'message': 'No contact found with id so update failed.'}
             else:
                 with self.uow:
                     if 'birthday' in new_properties_dict.keys():
